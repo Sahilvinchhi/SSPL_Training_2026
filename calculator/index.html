@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Calculator</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        function add(){
+            var no1 = parseFloat(document.myform.no1.value);
+            var no2 = parseFloat(document.myform.no2.value);
+            document.myform.result.value = no1 + no2;
+        }
+
+        function sub(){
+            var no1 = parseFloat(document.myform.no1.value);
+            var no2 = parseFloat(document.myform.no2.value);
+            document.myform.result.value = no1 - no2;
+        }
+
+        function mul(){
+            var no1 = parseFloat(document.myform.no1.value);
+            var no2 = parseFloat(document.myform.no2.value);
+            document.myform.result.value = no1 * no2;
+        }
+
+        function div(){
+            var no1 = parseFloat(document.myform.no1.value);
+            var no2 = parseFloat(document.myform.no2.value);
+
+            if(no2 === 0){
+                alert("Cannot divide by zero!");
+                document.myform.result.value = "";
+            } else {
+                document.myform.result.value = no1 / no2;
+            }
+        }
+
+        function clearForm(){
+            document.myform.no1.value = "";
+            document.myform.no2.value = "";
+            document.myform.result.value = "";
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+
+        <form name="myform">
+
+            Number 1:<input type="number" name="no1"><br><br>
+
+            Number 2:<input type="number" name="no2"><br><br>
+
+            Result:<input type="number" name="result" readonly><br><br>
+
+            <div>
+                <input class="btn" type="button" value="+" onclick="add()">
+                <input class="btn" type="button" value="-" onclick="sub()">
+                <input class="btn" type="button" value="x" onclick="mul()">
+                <input class="btn" type="button" value="÷" onclick="div()">
+            </div>
+
+            <br>
+
+            <select name="OPERATION" onchange="window[this.value]()">
+                <option value="">Select</option>
+                <option value="add">+</option>
+                <option value="sub">-</option>
+                <option value="mul">x</option>
+                <option value="div">÷</option>
+            </select>
+
+            <input class="btn" type="button" value="Clear" onclick="clearForm()">
+
+        </form>
+
+    </div>
+</body>
+</html>
