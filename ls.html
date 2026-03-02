@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Counter</title>
+</head>
+<body>
+
+  <h2 id="displayNumber"></h2>
+
+  <button onclick="minus()">-</button>
+  <button onclick="plus()">+</button>
+
+  <script>
+    // Get saved value from localStorage
+    let currentValue = localStorage.getItem("myCounter");
+
+    // If no saved value, start from 0
+    if (currentValue === null) {
+      currentValue = 0;
+    } else {
+      currentValue = parseInt(currentValue);
+    }
+
+    // Show initial value
+    document.getElementById("displayNumber").innerText = currentValue;
+
+    function plus() {
+      currentValue++;
+      refreshValue();
+    }
+
+    function minus() {
+      currentValue--;
+      refreshValue();
+    }
+
+    function refreshValue() {
+      document.getElementById("displayNumber").innerText = currentValue;
+      localStorage.setItem("myCounter", currentValue);
+    }
+  </script>
+
+</body>
+</html>
