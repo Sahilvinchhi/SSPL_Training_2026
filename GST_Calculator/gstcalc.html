@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>GST Calculator</title>
+	<style>
+		body {
+			margin: 0;
+			min-height: 100vh;
+			display: grid;
+			place-items: center;
+			font-family: Arial, sans-serif;
+			background: #f3f4f6;
+		}
+
+		.card {
+			width: min(92vw, 380px);
+			background: #fff;
+			padding: 20px;
+			border-radius: 12px;
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+		}
+
+		h2 {
+			margin: 0 0 14px;
+			text-align: center;
+		}
+
+		label {
+			display: block;
+			margin: 10px 0 6px;
+			font-size: 14px;
+			color: #374151;
+		}
+
+		input,
+		select {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #d1d5db;
+			border-radius: 8px;
+			font-size: 15px;
+			box-sizing: border-box;
+		}
+
+		.btn-row {
+			margin-top: 14px;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 10px;
+		}
+
+		button {
+			border: none;
+			padding: 10px;
+			border-radius: 8px;
+			color: #fff;
+			cursor: pointer;
+			font-size: 14px;
+		}
+
+		#includeBtn { background: #2563eb; }
+		#excludeBtn { background: #059669; }
+
+		.result {
+			margin-top: 16px;
+			background: #f9fafb;
+			border-radius: 8px;
+			padding: 10px;
+			line-height: 1.7;
+			font-size: 15px;
+		}
+	</style>
+</head>
+<body>
+	<div class="card">
+		<h2>GST Calculator</h2>
+
+		<label for="amount">Amount</label>
+		<input id="amount" type="number" placeholder="Enter amount" min="0" />
+
+		<label for="gstRate">Select GST %</label>
+		<select id="gstRate">
+			<option value="3">3%</option>
+			<option value="5">5%</option>
+			<option value="12">12%</option>
+			<option value="18" selected>18%</option>
+			<option value="28">28%</option>
+		</select>
+
+		<div class="btn-row">
+			<button id="includeBtn">GST Include</button>
+			<button id="excludeBtn">GST Exclude</button>
+		</div>
+
+		<div class="result" id="resultBox">
+			Enter value and click a button.
+		</div>
+	</div>
+
+	<script>
+		const amountInput = document.getElementById("amount");
+		const gstRateSelect = document.getElementById("gstRate");
+		const includeBtn = document.getElementById("includeBtn");
+		const excludeBtn = document.getElementById("excludeBtn");
+		const resultBox = document.getElementById("resultBox");
+
+		function getValues() {
+			const amount = Number(amountInput.value);
+			const rate = Number(gstRateSelect.value);
+			return { amount, rate };
+		}
+
+		includeBtn.addEventListener("click", () => {
+			const { amount, rate } = getValues();
+
+			if (amount <= 0) {
+				resultBox.textContent = "Please enter valid amount.";
+				return;
+			}
+
+			const gstAmount = (amount * rate) / 100;
+			const total = amount + gstAmount;
+
+			resultBox.innerHTML =
+				`Base Amount: ₹${amount.toFixed(2)}<br>` +
+				`GST (${rate}%): ₹${gstAmount.toFixed(2)}<br>` +
+				`<strong>Total with GST: ₹${total.toFixed(2)}</strong>`;
+		});
+
+		excludeBtn.addEventListener("click", () => {
+			const { amount, rate } = getValues();
+
+			if (amount <= 0) {
+				resultBox.textContent = "Please enter valid amount.";
+				return;
+			}
+
+			const baseAmount = amount / (1 + rate / 100);
+			const gstAmount = amount - baseAmount;
+
+			resultBox.innerHTML =
+				`Total Amount: ₹${amount.toFixed(2)}<br>` +
+				`GST Part (${rate}%): ₹${gstAmount.toFixed(2)}<br>` +
+				`<strong>Amount without GST: ₹${baseAmount.toFixed(2)}</strong>`;
+		});
+	</script>
+</body>
+</html>
