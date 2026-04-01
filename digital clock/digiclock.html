@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Digital Clock</title>
+	<style>
+		body {
+			margin: 0;
+			min-height: 100vh;
+			display: grid;
+			place-items: center;
+			font-family: Arial, sans-serif;
+			background: #f3f4f6;
+		}
+
+		.clock-box {
+			background: #ffffff;
+			padding: 24px;
+			border-radius: 500px;
+			text-align: center;
+			width: 300px;
+			height: 300px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			box-sizing: border-box;
+			box-shadow: 0 12px 18px rgb(0, 255, 34);
+		}
+
+		.clock-box:hover {
+			box-shadow: 0 12px 18px rgb(83, 32, 32);
+            border-radius: 50px;
+		}
+
+		#time {
+			font-size: 34px;
+			font-weight: bold;
+			color: #111827;
+			margin-bottom: 8px;
+			text-align: center;
+		}
+
+		#date {
+			font-size: 18px;
+			color: #4b5563;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div class="clock-box">
+		<div id="time">00:00:00</div>
+		<div id="date">Loading date...</div>
+	</div>
+	<script>
+		const timeLabel = document.getElementById("time");
+		const dateLabel = document.getElementById("date");
+
+		function refreshClock() {
+			const current = new Date();
+
+			const currentTime = current.toLocaleTimeString();
+			const currentDate = current.toLocaleDateString(undefined, {
+				weekday: "long",
+				year: "numeric",
+				month: "long",
+				day: "numeric"
+			});
+
+			timeLabel.textContent = currentTime;
+			dateLabel.textContent = currentDate;
+		}
+
+		refreshClock();
+		setInterval(refreshClock, 1000);
+	</script>
+</body>
+</html>

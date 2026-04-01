@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Random OTP Generator</title>
+	<style>
+		body {
+			margin: 0;
+			font-family: Arial, sans-serif;
+			min-height: 100vh;
+			display: grid;
+			place-items: center;
+			background: #f4f6f8;
+		}
+
+		.card {
+			background: linear-gradient(to bottom, #ff5233, #1c7700);
+			padding: 24px;
+			border-radius: 22px;
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+			text-align: center;
+			width: min(90vw, 320px);
+         
+		}
+        .card:hover{
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
+        }
+
+		h2 {
+			margin-top: 0;
+			margin-bottom: 16px;
+		}
+
+		#otp {
+			font-size: 32px;
+			font-weight: bold;
+			letter-spacing: 4px;
+			margin: 16px 0 20px;
+			color: #fcfcfc;
+		}
+
+		button {
+			border: none;
+			background: #15ff00;
+			color: #000000;
+			padding: 10px 16px;
+			border-radius: 8px;
+			font-size: 15px;
+			cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+		}
+
+		button:hover {
+			background: #fbff00;
+		}
+	</style>
+</head>
+<body>
+	<div class="card">
+		<h2>Random OTP</h2>
+		<div id="otp">000000</div>
+		<button id="generateBtn">Generate OTP</button>
+	</div>
+
+	<script>
+		const otpElement = document.getElementById("otp");
+		const generateBtn = document.getElementById("generateBtn");
+
+		function generateOTP() {
+			const otp = Math.floor(100000 + Math.random() * 900000);
+			otpElement.textContent = otp;
+		}
+
+		window.addEventListener("load", generateOTP);
+		generateBtn.addEventListener("click", generateOTP);
+	</script>
+</body>
+</html>

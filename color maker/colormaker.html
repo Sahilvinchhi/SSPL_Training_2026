@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Create Color Maker</title>
+	<style>
+		body {
+			margin: 0;
+			font-family: Georgia, serif;
+			background: rgb(0, 0, 0);
+			min-height: 100vh;
+			display: grid;
+			place-items: center;
+			transition: background-color 0.2s ease;
+		}
+
+		h3 {
+			margin: 0 0 12px;
+			font-size: 18px;
+			font-weight: 500;
+			text-align: center;
+		}
+
+		.container {
+			width: min(92vw, 420px);
+		}
+
+		.controls {
+			width: 100%;
+			padding: 16px;
+			box-sizing: border-box;
+			background: #ffffff;
+			border-radius: 12px;
+			box-shadow: 0 8px 22px rgba(0, 0, 0, 0.15);
+		}
+
+		.row {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin-bottom: 10px;
+			font-size: 32px;
+			line-height: 1;
+		}
+
+		input[type="range"] {
+			width: 100%;
+			accent-color: #1a73e8;
+			cursor: pointer;
+		}
+
+		.rgb-text {
+			text-align: center;
+			font-size: 30px;
+			margin-top: 6px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="controls">
+			<h3>Create Color Maker</h3>
+			<div class="row">R <input id="red" type="range" min="0" max="255" value="0" /></div>
+			<div class="row">G <input id="green" type="range" min="0" max="255" value="0" /></div>
+			<div class="row">B <input id="blue" type="range" min="0" max="255" value="0" /></div>
+			<div class="rgb-text" id="colorText">rgb(0, 0, 0)</div>
+		</div>
+	</div>
+
+	<script>
+		const r = document.getElementById("red");
+		const g = document.getElementById("green");
+		const b = document.getElementById("blue");
+		const colorText = document.getElementById("colorText");
+
+		function applyColor() {
+			const redValue = Number(r.value);
+			const greenValue = Number(g.value);
+			const blueValue = Number(b.value);
+
+			const color = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
+
+			colorText.textContent = color;
+			document.body.style.backgroundColor = color;
+		}
+
+		r.addEventListener("input", applyColor);
+		g.addEventListener("input", applyColor);
+		b.addEventListener("input", applyColor);
+
+		applyColor();
+	</script>
+</body>
+</html>

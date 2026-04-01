@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Guess the Number</title>
+	<style>
+		body {
+			margin: 0;
+			min-height: 100vh;
+			display: grid;
+			place-items: center;
+			font-family: "Segoe UI", Arial, sans-serif;
+			background: radial-gradient(circle at top, #e8f1ff, #d8e3f7);
+		}
+
+		.game-card {
+			width: min(92vw, 420px);
+			background: #ffffff;
+			border-radius: 14px;
+			padding: 22px;
+			box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+		}
+
+		h2 {
+			margin: 0 0 8px;
+			text-align: center;
+			color: #102a43;
+		}
+
+		p {
+			margin: 0 0 14px;
+			text-align: center;
+			color: #486581;
+			font-size: 14px;
+		}
+
+		.input-row {
+			display: flex;
+			gap: 10px;
+		}
+
+		input {
+			flex: 1;
+			padding: 10px;
+			font-size: 16px;
+			border: 1px solid #bcccdc;
+			border-radius: 8px;
+			outline: none;
+		}
+
+		button {
+			padding: 10px 14px;
+			border: none;
+			border-radius: 8px;
+			background: #2563eb;
+			color: #fff;
+			cursor: pointer;
+			font-size: 15px;
+		}
+
+		.result {
+			margin-top: 14px;
+			text-align: center;
+			font-weight: 600;
+			min-height: 22px;
+		}
+
+		.score {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 10px;
+			margin-top: 14px;
+		}
+
+		.score-box {
+			background: #f0f4f8;
+			border-radius: 10px;
+			padding: 10px;
+			text-align: center;
+		}
+
+		.score-box h4 {
+			margin: 0 0 4px;
+			font-size: 13px;
+			color: #334e68;
+			font-weight: 600;
+		}
+
+		.score-box div {
+			font-size: 24px;
+			font-weight: bold;
+			color: #102a43;
+		}
+	</style>
+</head>
+<body>
+	<div class="game-card">
+		<h2>Guess the Number</h2>
+		<p>Enter number between 1 and 100</p>
+
+		<div class="input-row">
+			<input id="guessInput" type="number" min="1" max="100" placeholder="Your guess" />
+			<button id="checkBtn">Check</button>
+		</div>
+
+		<div class="result" id="resultText"></div>
+
+		<div class="score">
+			<div class="score-box">
+				<h4>Success Value</h4>
+				<div id="successCount">0</div>
+			</div>
+			<div class="score-box">
+				<h4>Failure Value</h4>
+				<div id="failureCount">0</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const guessInput = document.getElementById("guessInput");
+		const checkBtn = document.getElementById("checkBtn");
+		const resultText = document.getElementById("resultText");
+		const successCount = document.getElementById("successCount");
+		const failureCount = document.getElementById("failureCount");
+
+		let targetNumber = Math.floor(Math.random() * 100) + 1;
+		let successValue = 0;
+		let failureValue = 0;
+
+		function handleGuess() {
+			const guessedNumber = Number(guessInput.value);
+
+			if (!guessedNumber || guessedNumber < 1 || guessedNumber > 100) {
+				resultText.textContent = "Enter valid number (1 to 100).";
+				resultText.style.color = "#b91c1c";
+				return;
+			}
+
+			if (guessedNumber === targetNumber) {
+				successValue++;
+				successCount.textContent = successValue;
+				resultText.textContent = "Matched! You guessed correct.";
+				resultText.style.color = "#047857";
+				targetNumber = Math.floor(Math.random() * 100) + 1;
+			} else {
+				failureValue++;
+				failureCount.textContent = failureValue;
+				resultText.textContent = "Not matched. Try again.";
+				resultText.style.color = "#b91c1c";
+			}
+
+			guessInput.value = "";
+			guessInput.focus();
+		}
+
+		checkBtn.addEventListener("click", handleGuess);
+		guessInput.addEventListener("keydown", (event) => {
+			if (event.key === "Enter") {
+				handleGuess();
+			}
+		});
+	</script>
+</body>
+</html>

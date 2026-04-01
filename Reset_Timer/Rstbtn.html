@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Resend Timer</title>
+	<style>
+		body {
+			margin: 0;
+			min-height: 100vh;
+			display: grid;
+			place-items: center;
+			font-family: Arial, sans-serif;
+			background: #000000;
+		}
+
+		.card {
+			background: #ffffff;
+			padding: 24px;
+			border-radius: 10px;
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+			text-align: center;
+			width: min(90vw, 340px);
+		}
+
+		#timer {
+			font-size: 40px;
+			font-weight: bold;
+			margin: 10px 0 18px;
+			color: #1f2937;
+		}
+
+		button {
+			border: none;
+			background: #2563eb;
+			color: #fff;
+			padding: 10px 16px;
+			border-radius: 8px;
+			cursor: pointer;
+			font-size: 15px;
+		}
+
+		button:disabled {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
+
+		#resendBtn {
+			display: none;
+			background: #059669;
+		}
+	</style>
+</head>
+<body>
+	<div class="card">
+		<h2>OTP Timer</h2>
+		<div id="timer">00:30</div>
+		<button id="startBtn">Start Timer</button>
+		<button id="resendBtn">Resend</button>
+	</div>
+
+	<script>
+		const timerText = document.getElementById("timer");
+		const startBtn = document.getElementById("startBtn");
+		const resendBtn = document.getElementById("resendBtn");
+
+		let secondsLeft = 30;
+		let timerId = null;
+
+		function formatTime(totalSeconds) {
+			const min = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+			const sec = String(totalSeconds % 60).padStart(2, "0");
+			return `${min}:${sec}`;
+		}
+
+		function updateDisplay() {
+			timerText.textContent = formatTime(secondsLeft);
+		}
+
+		function startCountdown() {
+			clearInterval(timerId);
+			secondsLeft = 30;
+			updateDisplay();
+
+			startBtn.disabled = true;
+			resendBtn.style.display = "none";
+
+			timerId = setInterval(() => {
+				secondsLeft--;
+				updateDisplay();
+
+				if (secondsLeft <= 0) {
+					clearInterval(timerId);
+					startBtn.disabled = false;
+					resendBtn.style.display = "inline-block";
+				}
+			}, 1000);
+		}
+
+		startBtn.addEventListener("click", startCountdown);
+		resendBtn.addEventListener("click", startCountdown);
+	</script>
+</body>
+</html>
